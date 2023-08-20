@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+
 import 'package:bloc_management/counter_bloc.dart';
+import 'package:bloc_management/list_bloc.dart';
 import 'package:bloc_management/model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +13,7 @@ class CounterApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     DemoModel model = DemoModel();
+    List <Entries> list = [];
     return MaterialApp(
       home: MultiBlocProvider(
         providers: [
@@ -20,6 +23,8 @@ class CounterApp extends StatelessWidget {
           BlocProvider<CatBloc>(
             create: (_) => CatBloc(model),
           ),
+          // BlocProvider(create: ListBloc([])
+          // )
         ], child: CounterPage(),
       ),
     );
@@ -54,7 +59,7 @@ class CounterPage extends StatelessWidget {
                       height: 20,
                       width: double.infinity,
                       margin: EdgeInsets.only(top: 10),
-                      color: Colors.red,
+                      child: Text(model.entries?[i].aPI??""),
                     );
                   },
                 );
@@ -90,8 +95,7 @@ class CounterPage extends StatelessWidget {
           FloatingActionButton(
             child: const Icon(Icons.remove),
             onPressed: () {
-
-                  Controller().getData(context);
+              Controller().getData(context);
               log(context.read<CatBloc>().state.toJson().toString());
             },
           ),

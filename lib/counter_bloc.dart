@@ -8,7 +8,7 @@ import 'package:http/http.dart'as http;
 class CounterBloc extends Cubit<int>{
   CounterBloc(super.initialState);
   void increment()=> emit(state+1);
-  void decrement()=> emit(state+1);
+  void decrement()=> emit(state-1);
 }
 
 class CatBloc extends Cubit<DemoModel>{
@@ -20,6 +20,7 @@ class CatBloc extends Cubit<DemoModel>{
 }
 
 
+
 class Controller{
 
    Future getData(BuildContext context)async{
@@ -27,7 +28,7 @@ class Controller{
      var response =await http.get(uri);
      DemoModel model = DemoModel.fromJson(jsonDecode(response.body));
      print("hit");
-     context.read<CatBloc>().emit(model);
+     context.read<CatBloc>().updateModel(model);
    }
 
 }
